@@ -1,4 +1,4 @@
-const inquirer = require('inquirer')
+const { prompt } = require('inquirer')
 
 const choices = ['r', 'p', 's']
 
@@ -8,27 +8,27 @@ let wins = 0,
   rounds = 0
 
 const round = () => {
-  inquirer.prompt({
+  prompt({
     type: 'list',
     name: 'choice',
     message: `Please choose 'r', 'p', or 's'`,
     choices
   })
-    .then(res => {
+    .then(({ choice }) => {
       rounds++
       const compChoice = choices[Math.floor(Math.random() * choices.length)]
 
       console.log(`
-        You chose ${res.choice}
+        You chose ${choice}
         The computer chose ${compChoice}
       `)
 
-      if (res.choice === compChoice) {
+      if (choice === compChoice) {
         ties++
         console.log('You tied!')
-      } else if ((res.choice === 'r' && compChoice === 's') ||
-        (res.choice === 'p' && compChoice === 'r') ||
-        (res.choice === 's' && compChoice === 'p')) {
+      } else if ((choice === 'r' && compChoice === 's') ||
+        (choice === 'p' && compChoice === 'r') ||
+        (choice === 's' && compChoice === 'p')) {
         wins++
         console.log('You won!')
       } else {
